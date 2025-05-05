@@ -1,0 +1,15 @@
+preprocess:
+  input: data/raw/tourism.csv
+  output: 
+    train: data/preprocessed/train.csv
+    test: data/preprocessed/test.csv
+
+train:
+  data: data/preprocessed/train.csv
+  models: 
+    base_model: models/base_rf.pkl
+    tuned_model: models/tuned_rf.pkl
+  random_state: 42
+
+evaluate:
+  data: data/preprocessed/test.csv

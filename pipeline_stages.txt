@@ -1,0 +1,20 @@
+dvc stage add -n preprocess \
+    -p preprocess.input, preprocess.output.train, preprocess.output.test \
+    -d ./src/preprocessing.py -d ./data/raw/tourism.csv \
+    -o ./data/preprocessed/train.csv -o ./data/preprocessed/test.csv \
+    python ./src/preprocessing.py
+dvc stage add -n preprocess -p preprocess.input, preprocess.output.train, preprocess.output.test -d ./src/preprocessing.py -d ./data/raw/tourism.csv -o ./data/preprocessed/train.csv -o ./data/preprocessed/test.csv python ./src/preprocessing.py
+
+dvc stage add -n train \
+    -p train.data, train.models.base_model, train.models.tuned_model, train.random_state \
+    -d ./src/training.py -d ./data/preprocessed/train.csv \
+    -o models/base_rf.pkl -o models/tuned_rf.pkl \
+    python ./src/train.py
+dvc stage add -n train -p train.data, train.models.base_model, train.models.tuned_model, train.random_state -d ./src/training.py -d ./data/preprocessed/train.csv -o models/base_rf.pkl -o models/tuned_rf.pkl python ./src/train.py
+
+
+dvc stage add -n evaluate \
+    -d ./src/evaluate.py -d models/base_rf.pkl -d models/tuned_rf.pkl -d ./data/preprocessed/test.csv \
+    python ./src/evaluate.py
+
+dvc stage add -n evaluate -d ./src/evaluate.py -d models/base_rf.pkl -d models/tuned_rf.pkl -d ./data/preprocessed/test.csv python ./src/evaluate.py

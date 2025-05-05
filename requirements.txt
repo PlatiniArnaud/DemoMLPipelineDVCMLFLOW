@@ -1,0 +1,14 @@
+dvc
+dagshub
+pandas
+numpy
+scikit-learn
+scipy
+statsmodels
+matplotlib
+seaborn
+xgboost
+pyyaml
+mlflow
+dvc-s3
+python-dotenv

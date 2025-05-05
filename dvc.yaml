@@ -1,0 +1,33 @@
+stages:
+  preprocess:
+    cmd: python ./src/preprocessing.py
+    deps:
+    - ./data/raw/tourism.csv
+    - ./src/preprocessing.py
+    params:
+    - preprocess.input
+    - preprocess.output.test
+    - preprocess.output.train
+    outs:
+    - ./data/preprocessed/test.csv
+    - ./data/preprocessed/train.csv
+  train:
+    cmd: python ./src/training.py
+    deps:
+    - ./data/preprocessed/train.csv
+    - ./src/training.py
+    params:
+    - train.data
+    - train.models.base_model
+    - train.models.tuned_model
+    - train.random_state
+    outs:
+    - models/base_rf.pkl
+    - models/tuned_rf.pkl
+  evaluate:
+    cmd: python ./src/evaluate.py
+    deps:
+    - ./data/preprocessed/test.csv
+    - ./src/evaluate.py
+    - models/base_rf.pkl
+    - models/tuned_rf.pkl
